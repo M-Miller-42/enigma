@@ -54,4 +54,21 @@ public class EnigmaTest
         EnigmaConsole.ParseLine("!create 3 LPGSZMHAEOQKVXRFYBUTNICJDW Z Q SLVGBTFXJQOHEWIRZYAMKPCNDU Z V CJGDPSHKTURAWZXFMYNQOBVLIE Z I IMETCGFRAYSQBZXWLHKDVUPOJN JWULCMNOHPQZYXIRADKEGVBTSF");
         Assert.AreEqual("OHHPTLICSLUIVU", EnigmaConsole.Enigma.EncodeString("PFXWAKVSTNRRKX"));
     }
+
+    [TestMethod]
+    public void TestParsing()
+    {
+        EnigmaConsole.ParseLine("!create 0 random");
+        Assert.IsNotNull(EnigmaConsole.Enigma);
+        EnigmaConsole.Reset();
+
+        EnigmaConsole.ParseLine("!create 1 random 0 0 random identity");
+        Assert.IsNotNull(EnigmaConsole.Enigma);
+        EnigmaConsole.Reset();
+
+        EnigmaConsole.ParseLine("!create 0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 random");
+        Assert.IsNotNull(EnigmaConsole.Enigma);
+        EnigmaConsole.Reset();
+
+    }
 }
