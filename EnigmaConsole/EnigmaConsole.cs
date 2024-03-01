@@ -1,8 +1,8 @@
 public static class EnigmaConsole
 {
     private const string EnigmaNullMsg = "No enigma created yet. Use the `!create` command.";
+    private const bool ExitByEndOfFile = false;
     private static bool isRunning = false;
-    private static bool exitByEndOfFile = false;
 
     public static Enigma? Enigma { get; set; }
     public static void Main()
@@ -16,7 +16,7 @@ public static class EnigmaConsole
             string? input = Console.ReadLine();
             if (input == null)
             {
-                if (exitByEndOfFile)
+                if (ExitByEndOfFile)
                     break;
                 else
                     continue;
@@ -30,42 +30,36 @@ public static class EnigmaConsole
     public static void ParseLine(string inputLine)
     {
         string[] tokensArray = inputLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        Queue<string> tokens = new Queue<string>(tokensArray);
+        Queue<string> tokens = new(tokensArray);
         string cmd = tokens.First().ToLower();
-        try
+
+        switch (cmd)
         {
-            switch (cmd)
-            {
-                case "!create":
-                    {
-                        CreateEnigma(tokens);
-                        break;
-                    }
-                case "!rotate":
-                    {
-                        Rotate(tokens);
-                        break;
-                    }
-                case "!info":
-                    {
-                        Info();
-                        break;
-                    }
-                case "!exit":
-                    {
-                        System.Environment.Exit(0);
-                        break;
-                    }
-                default:
-                    {
-                        Encode(tokens);
-                        break;
-                    }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            case "!create":
+                {
+                    CreateEnigma(tokens);
+                    break;
+                }
+            case "!rotate":
+                {
+                    Rotate(tokens);
+                    break;
+                }
+            case "!info":
+                {
+                    Info();
+                    break;
+                }
+            case "!exit":
+                {
+                    Environment.Exit(0);
+                    break;
+                }
+            default:
+                {
+                    Encode(inputLine);
+                    break;
+                }
         }
     }
 
@@ -148,18 +142,20 @@ public static class EnigmaConsole
         Console.WriteLine("Enigma created.");
     }
 
-    public static void Encode(Queue<string> split)
+    public static void Encode(string input)
     {
         if (Enigma == null)
         {
             Console.WriteLine(EnigmaNullMsg);
             return;
         }
-        if (split.Count == 1)
+        if (!Enigma.Alphabet.Contains(input))
         {
-            foreach (string s in split)
-                Console.WriteLine(Enigma.EncodeString(s));
+            Console.WriteLine($"Can only encode inputs from the alphabet {Enigma.Alphabet}.");
+            return;
         }
+
+        Console.WriteLine(Enigma.EncodeString(input));
     }
 
     public static void Reset()

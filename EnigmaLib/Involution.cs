@@ -8,7 +8,6 @@ public class Involution : Permutation
         }
     }
 
-
     public Involution(Permutation permutation) : base(permutation.Table)
     {
         if (!IsInvolution())
@@ -17,12 +16,7 @@ public class Involution : Permutation
 
     private bool IsInvolution()
     {
-        for (int i = 0; i <= Enigma.n - 1; i++)
-        {
-            if (ApplyTo(ApplyTo(i)) != i)
-                return false;
-        }
-        return true;
+        return Enumerable.Range(0, Enigma.N).All(i => ApplyTo(ApplyTo(i)) == i);
     }
 
     public static new Involution Parse(string p)

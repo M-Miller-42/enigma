@@ -45,19 +45,10 @@ public partial class Permutation
 
     private static bool IsPermutation(IEnumerable<int> permutation)
     {
-        bool[] l = new bool[Enigma.n ];
         if (permutation == null || permutation.Count() != Enigma.N)
             return false;
 
-        foreach (int c in permutation)
-        {
-            if (c < 0 || c >= Enigma.N || l[c] == true)
-                return false;
-            else
-                l[c] = true;
-        }
-
-        return true;
+        return permutation.ToHashSet().SetEquals(Enumerable.Range(0, Enigma.N));
     }
 
     public void CreateInverse()
