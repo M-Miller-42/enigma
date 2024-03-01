@@ -89,7 +89,7 @@ public partial class Permutation
 
     public static Permutation Parse(string p)
     {
-        if (p == "id")
+        if (p == "identity")
             return Identity;
         if (p == "random")
             return Random();

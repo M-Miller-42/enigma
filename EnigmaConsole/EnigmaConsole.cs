@@ -13,20 +13,20 @@ using Microsoft.VisualBasic;
 
 public static class EnigmaConsole
 {
+    private const string EnigmaNullMsg = "No enigma created yet. Use the `!create` command.";
     private static bool isRunning = false;
     private static bool exitByEndOfFile = false;
-    public static Enigma enigma;
 
+    public static Enigma? Enigma { get; set; }
     public static void Main()
     {
-        string input;
         isRunning = true;
-        Console.WriteLine("Waiting for input, use command `info` to see the current state.");
+        Console.WriteLine("Waiting for input, use the command `!info` to see the current state.");
         while (isRunning)
         {
             Console.WriteLine();
             Console.Write("> ");
-            input = Console.ReadLine();
+            string? input = Console.ReadLine();
             if (input == null)
             {
                 if (exitByEndOfFile)
@@ -49,26 +49,22 @@ public static class EnigmaConsole
         {
             switch (cmd)
             {
-                case "create":
+                case "!create":
                     {
                         CreateEnigma(tokens);
                         break;
                     }
-                case "en":
-                    {
-                        break;
-                    }
-                case "rot":
+                case "!rotate":
                     {
                         Rotate(tokens);
                         break;
                     }
-                case "info":
+                case "!info":
                     {
                         Info();
                         break;
                     }
-                case "exit":
+                case "!exit":
                     {
                         System.Environment.Exit(0);
                         break;
@@ -89,11 +85,17 @@ public static class EnigmaConsole
 
     public static void Rotate(Queue<string> command)
     {
+        if (Enigma == null)
+        {
+            Console.WriteLine(EnigmaNullMsg);
+            return;
+        }
+
         Rotor rotor;
         command.Dequeue();
         if (!command.Any())
             return;
-        rotor = enigma.getRotor(int.Parse(command.Dequeue()));
+        rotor = Enigma.getRotor(int.Parse(command.Dequeue()));
         rotor.Index = 0;
 
         if (!command.Any())
@@ -105,23 +107,31 @@ public static class EnigmaConsole
         rotor.TickPos = int.Parse(command.Dequeue());
     }
 
-
     public static void Info()
     {
-        if (enigma == null)
-            Console.WriteLine("No enigma created yet! Use the `create` command.");
+        if (Enigma == null)
+            Console.WriteLine(EnigmaNullMsg);
         else
-            Console.WriteLine(enigma);
+            Console.WriteLine(Enigma);
     }
+
     private static void CreateEnigma(Queue<string> command)
     {
+        const string syntaxError = "Expecting arguments of the form `<rotorCount> <rotorData> <reflectorInv> <patchBoard>`\n" +
+                "where <rotorData> is `random` or `<permutation> <tickPos> <index>`\n" +
+                "   where <permutation> is a permutation of the alphabet e.g. `CBAFG...`\n" +
+                "       or a comma separated permutation of 0,...,n-1\n" +
+                "       or `random` or identity`\n" +
+                "<reflectorInv> is an involution in the syntax of <permutation>,\n" +
+                "<patchBoard> is a <permutation>.\n";
+
         command.Dequeue();
-        if (command.Count < 3)
+        if (command.Count < 1)
         {
-            Console.WriteLine("Expecting at least 2 arguments of the form `create <rotorCount> <rotorData>`, " +
-                "where <rotorData> is a space separated list of permutations or `random`.");
+            Console.WriteLine(syntaxError);
             return;
         }
+
         int rotCount = int.Parse(command.Dequeue());
         if (command.First() == "random")
         {
@@ -129,30 +139,39 @@ public static class EnigmaConsole
             for (int i = 0; i <= rotCount - 1; i++)
                 rps[i] = new RotorParam(Permutation.Random(), 0, 0);
 
-            enigma = new Enigma(rps, Involution.Random(), Permutation.Random());
+            Enigma = new Enigma(rps, Involution.Random(), Permutation.Random());
+        }
+
+        if (command.Count < 3 * rotCount + 2)
+        {
+            Console.WriteLine("Not enough arguments for {rotCount} rotors.");
+            Console.WriteLine(syntaxError);
+            return;
         }
         else
         {
-            if (command.Count < 3 * rotCount + 2)
-                throw new ArgumentOutOfRangeException("Zu wenige Argumente für create");
             RotorParam[] rps = new RotorParam[rotCount];
             for (int i = 0; i <= rotCount - 1; i++)
                 rps[i] = RotorParam.Parse(command.Dequeue(), command.Dequeue(), command.Dequeue());
             Involution reflector = Involution.Parse(command.Dequeue());
             Permutation patchBoard = Permutation.Parse(command.Dequeue());
-            enigma = new Enigma(rps, reflector, patchBoard);
+            Enigma = new Enigma(rps, reflector, patchBoard);
         }
+
         Console.WriteLine("Enigma created.");
     }
 
     public static void Encode(Queue<string> split)
     {
-        if (enigma == null)
-            Console.WriteLine("Noch keine Enigma erstellt!");
-        else if (split.Count == 1)
+        if (Enigma == null)
+        {
+            Console.WriteLine(EnigmaNullMsg);
+            return;
+        }
+        if (split.Count == 1)
         {
             foreach (string s in split)
-                Console.WriteLine(enigma.EncodeString(s));
+                Console.WriteLine(Enigma.EncodeString(s));
         }
     }
 }
