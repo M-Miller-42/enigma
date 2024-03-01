@@ -34,8 +34,8 @@ public class Involution : Permutation
 
     public static new Involution Random()
     {
-        int pairs = Enigma.n / 2;
-        int[] involution = new int[Enigma.n];
+        int pairs = Enigma.N / 2;
+        int[] involution = new int[Enigma.N];
         Permutation p = Permutation.Random();
 
         for (int i = 0; i <= 2 * (pairs - 1); i += 2)
@@ -44,8 +44,8 @@ public class Involution : Permutation
             involution[p.ApplyTo(i + 1)] = p.ApplyTo(i);
         }
 
-        if (Enigma.n % 2 == 1)
-            involution[p.ApplyTo(Enigma.n - 1)] = p.ApplyTo(Enigma.n - 1);
+        if (Enigma.N % 2 == 1)
+            involution[p.ApplyTo(Enigma.N - 1)] = p.ApplyTo(Enigma.N - 1);
 
         return new Involution(new Permutation(involution));
     }

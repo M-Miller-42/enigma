@@ -1,6 +1,18 @@
-public class Enigma
+public partial class Enigma
 {
-    public const int n = 26;
+    public static int N => Alphabet.Count;
+    private static IAlphabet alphabet = new LatinAlphabet();
+
+    public static IAlphabet Alphabet
+    {
+        get => alphabet;
+        set
+        {
+            if (value == null)
+                throw new NullReferenceException();
+            alphabet = value;
+        }
+    }
 
     private PatchBoard _patchBoard;
     public PatchBoard PatchBoard
@@ -81,16 +93,11 @@ public class Enigma
         }
     }
 
-
-    public static bool isChar(int a)
-    {
-        return a >= 0 && a < n;
-    }
     public string EncodeString(string input)
     {
-        var ints = input.Select(c => Convert.ToInt32(c) - 65);
+        var ints = input.Select(Alphabet.ToInt);
         var output = Encode(ints);
-        var chars = output.Select(c => Convert.ToChar(c + 65));
+        var chars = output.Select(Alphabet.ToChar);
         return string.Concat(chars);
     }
 

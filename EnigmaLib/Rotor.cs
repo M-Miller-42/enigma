@@ -10,7 +10,7 @@ public class Rotor
         }
         set
         {
-            _Index = ((value % Enigma.n) + Enigma.n) % Enigma.n;
+            _Index = ((value % Enigma.N) + Enigma.N) % Enigma.N;
         }
     }
 
@@ -23,7 +23,7 @@ public class Rotor
         }
         set
         {
-            _TickPos = ((value % Enigma.n) + Enigma.n) % Enigma.n;
+            _TickPos = ((value % Enigma.N) + Enigma.N) % Enigma.N;
         }
     }
 
@@ -33,13 +33,13 @@ public class Rotor
 
     public int Forward(int i)
     {
-        return (Permutation.ApplyTo((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.ApplyTo((i + _Index + Enigma.N) % Enigma.N) - _Index + Enigma.N) % Enigma.N;
         // return ((base.Forward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 
     public int Backward(int i)
     {
-        return (Permutation.ApplyInverseTo((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.ApplyInverseTo((i + _Index + Enigma.N) % Enigma.N) - _Index + Enigma.N) % Enigma.N;
         // return ((base.Backward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 
@@ -56,7 +56,7 @@ public class Rotor
     {
         if (_Index == _TickPos)
             NextRotor?.Tick();
-        _Index = (_Index + 1) % Enigma.n;
+        _Index = (_Index + 1) % Enigma.N;
     }
 
     public override string ToString()
