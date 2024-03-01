@@ -23,9 +23,9 @@ public partial class Enigma
         }
         set
         {
-            if (PatchBoard == null)
+            if (value == null)
                 throw new NullReferenceException();
-            _patchBoard = PatchBoard;
+            _patchBoard = value;
         }
     }
 
@@ -46,6 +46,7 @@ public partial class Enigma
 
 
     private Rotor[] _rotors = Array.Empty<Rotor>();
+
     public Rotor getRotor(int index)
     {
         if (index >= _rotors.Length)
@@ -66,18 +67,16 @@ public partial class Enigma
 
     public Enigma(RotorParam[] rotorParams, Involution reflectorPerm, Permutation patchBoardPerm)
     {
-        if (n < 0)
-            throw new ArgumentOutOfRangeException();
         if (rotorParams == null)
             throw new NullReferenceException();
-        if (!isValidRotorParamList(rotorParams))
+        if (!IsValidRotorParamList(rotorParams))
             throw new FormatException();
-        _reflector = new Reflector(reflectorPerm);
-        _patchBoard = new PatchBoard(patchBoardPerm);
+        Reflector = new Reflector(reflectorPerm);
+        PatchBoard = new PatchBoard(patchBoardPerm);
         CreateRotors(rotorParams);
     }
 
-    private bool isValidRotorParamList(RotorParam[] rotorParams)
+    private static bool IsValidRotorParamList(RotorParam[] rotorParams)
     {
         return rotorParams.All(param => param != null);
     }
@@ -109,26 +108,25 @@ public partial class Enigma
     public int[] Encode(int[] input)
     {
         var res = new int[input.Count()];
-        int i = 0;
-        int j = 0;
+        int index = 0;
         foreach (int c in input)
         {
-            j = _patchBoard.ApplyTo(c);
+            int current = PatchBoard.ApplyTo(c);
 
 
             for (int ii = 0; ii < _rotors.Length; ii++)
-                j = _rotors[ii].Forward(j);
+                current = _rotors[ii].Forward(current);
 
-            j = _reflector.ApplyTo(j);
+            current = _reflector.ApplyTo(current);
 
             for (int ii = _rotors.Length - 1; ii >= 0; ii--)
-                j = _rotors[ii].Backward(j);
+                current = _rotors[ii].Backward(current);
 
-            j = _patchBoard.ApplyInverseTo(j);
+            current = PatchBoard.ApplyInverseTo(current);
 
-            res[i] = j;
+            res[index] = current;
             _rotors[0].Tick();
-            i += 1;
+            index += 1;
         }
         return res;
     }
@@ -137,7 +135,7 @@ public partial class Enigma
     {
         string result = string.Empty;
         result += $"{_rotors.Length}\n";
-        result += $"{_patchBoard}\n";
+        result += $"{PatchBoard}\n";
         for (int i = 0; i < _rotors.Length; i++)
             result += $"R{i}:\t{_rotors[i]}\n";
         result += $"{_reflector}\n";
