@@ -1,13 +1,7 @@
-using Microsoft.VisualBasic;
-
-public class Reflector : Involution
+public class Reflector(Involution involution) : Involution(involution)
 {
-    public Reflector(Involution perm) : base(perm)
-    {
-    }
-
     public override string ToString()
     {
-        return "Ref: " + Constants.vbTab + base.ToString();
+        return $"Ref:\t{base.ToString()}";
     }
 }

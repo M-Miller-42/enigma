@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
@@ -7,7 +6,7 @@ public partial class Permutation
     [GeneratedRegex("[A-Z]+")]
     public static partial Regex Alphabet();
 
-    private static Random rand = new Random();
+    private static Random RandomGen = new Random();
     private static Permutation? _identity;
     public static Permutation Identity
     {
@@ -15,35 +14,16 @@ public partial class Permutation
         {
             if (_identity == null)
             {
-                int[] perm = new int[Enigma.n ];
-                for (int i = 0; i <= Enigma.n - 1; i++)
-                    perm[i] = i;
-                _identity = new Permutation(perm);
+                _identity = new Permutation(Enumerable.Range(0, Enigma.n));
             }
             return _identity;
         }
     }
 
-    private int[] _perm;
-    public virtual int[] Perm
-    {
-        get
-        {
-            return _perm;
-        }
-        set
-        {
-            if (!IsPermutation(value))
-                throw new FormatException();
-            _perm = value;
-        }
-    }
-
-    public virtual int Forward(int i)
-    {
-        return _perm[i];
-    }
-
+    /*
+        The i-th array value is the image of i as defined by the permutation.
+    */
+    public ImmutableArray<int> Table { get; }
     private int[] _inv;
 
 
@@ -58,16 +38,16 @@ public partial class Permutation
     }
 
 
-    public Permutation(IEnumerable<int> perm)
+    public Permutation(IEnumerable<int> permutation)
     {
-        if (!IsPermutation(perm))
+        if (!IsPermutation(permutation))
             throw new FormatException();
-        this._perm = perm.ToArray();
+        this.Table = permutation.ToImmutableArray();
         CreateInverse();
     }
 
 
-    private bool IsPermutation(IEnumerable<int> permutation)
+    private static bool IsPermutation(IEnumerable<int> permutation)
     {
         bool[] l = new bool[Enigma.n ];
         if (permutation == null || permutation.Count() != Enigma.n)
@@ -86,10 +66,9 @@ public partial class Permutation
 
     public void CreateInverse()
     {
-        int[] p = new int[Enigma.n ];
-        for (int i = 0; i <= Enigma.n - 1; i++)
-            p[_perm[i]] = i;
-        _inv = p;
+        _inv = new int[Enigma.n];
+        for (int i = 0; i < Enigma.n; i++)
+            _inv[Table[i]] = i;
     }
 
     public static Permutation Parse(string p)
@@ -100,8 +79,8 @@ public partial class Permutation
             return Random();
         if (Alphabet().IsMatch(p))
             return new Permutation(p.Select(parseFromAlphabet));
-        var perm = p.Split(',').Select(int.Parse);
-        return new Permutation(perm);
+        var permutation = p.Split(',').Select(int.Parse);
+        return new Permutation(permutation);
     }
 
     public static int parseFromAlphabet(char c){
@@ -111,31 +90,17 @@ public partial class Permutation
 
     public static Permutation Random()
     {
-        List<int> l = new List<int>();
-        int r;
-        int[] perm = new int[Enigma.n];
-        for (int i = 0; i <= Enigma.n - 1; i++)
-            l.Add(i);
-        for (int i = 0; i <= Enigma.n - 1; i++)
-        {
-            r = rand.Next(0, l.Count - 1);
-            perm[i] = l[r];
-            l.RemoveAt(r);
-        }
-        return new Permutation(perm);
+        int[] permutation = Enumerable.Range(0, Enigma.n).ToArray();
+        RandomGen.Shuffle(permutation);
+        return new Permutation(permutation);
     }
 
 
     public override string ToString()
     {
-        // string result = string.Empty;
-        // for (int i = 0; i <= _perm.Count() - 2; i++)
-        //     result += _perm[i] + ",";
-        // result += _perm[_perm.Count() - 1];
-        // return result;
-
-        var perm = Enumerable.Range(0, Enigma.n).Select(i => _perm[i]);
-        var result = perm.Select(c => Convert.ToChar(c + 65));
-        return string.Join("", result);
+        var permutation = Enumerable.Range(0, Enigma.n)
+            .Select(ApplyTo)
+            .Select(c => Convert.ToChar(c + 65));
+        return string.Join("", permutation);
     }
 }

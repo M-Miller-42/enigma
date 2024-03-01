@@ -1,22 +1,5 @@
 public class Involution : Permutation
 {
-    public override int[] Perm
-    {
-        get
-        {
-            return base.Perm;
-        }
-        set
-        {
-            int[] old = base.Perm;
-            base.Perm = value;
-            if (!IsInvolution())
-            {
-                base.Perm = old;
-                throw new FormatException();
-            }
-        }
-    }
     private static Involution? identity;
     public static new Involution Identity {
         get {
@@ -26,9 +9,7 @@ public class Involution : Permutation
     }
 
 
-    public Involution(Permutation perm) : this(perm.Perm) {}
-
-    public Involution(int[] perm) : base(perm)
+    public Involution(Permutation permutation) : base(permutation.Table)
     {
         if (!IsInvolution())
             throw new FormatException();
@@ -66,6 +47,6 @@ public class Involution : Permutation
         if (Enigma.n % 2 == 1)
             involution[p.ApplyTo(Enigma.n - 1)] = p.ApplyTo(Enigma.n - 1);
 
-        return new Involution(involution);
+        return new Involution(new Permutation(involution));
     }
 }

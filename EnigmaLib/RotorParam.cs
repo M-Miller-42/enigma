@@ -4,10 +4,10 @@ public class RotorParam
 
     public int Index { get; }
 
-    public Permutation Perm { get; }
+    public Permutation Permutation { get; }
 
 
-    public RotorParam(Permutation perm, int tickPos, int index)
+    public RotorParam(Permutation permutation, int tickPos, int index)
     {
         if (Enigma.n < 0)
             throw new ArgumentOutOfRangeException();
@@ -15,7 +15,7 @@ public class RotorParam
             throw new ArgumentOutOfRangeException();
         if (index < 0 || index >= Enigma.n)
             throw new ArgumentOutOfRangeException();
-        this.Perm = perm;
+        this.Permutation = permutation;
         this.TickPos = tickPos;
         this.Index = index;
     }

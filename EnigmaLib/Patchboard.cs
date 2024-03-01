@@ -1,11 +1,7 @@
-public class PatchBoard : Permutation
+public class PatchBoard(Permutation permutation) : Permutation(permutation.Table)
 {
-    public PatchBoard(Permutation perm) : base(perm.Perm)
-    {
-    }
-
     public override string ToString()
     {
-        return "PB: " + Constants.vbTab + base.ToString();
+        return $"PB:\t{base.ToString()}";
     }
 }

@@ -45,7 +45,7 @@ public class Rotor
 
     public Rotor(RotorParam rp, Rotor? nextRotor)
     {
-        this.Permutation = rp.Perm;
+        this.Permutation = rp.Permutation;
         this.Index = rp.Index;
         this.TickPos = rp.TickPos;
         this.NextRotor = nextRotor;
@@ -61,6 +61,6 @@ public class Rotor
 
     public override string ToString()
     {
-        return string.Join(" ", base.ToString(), TickPos, Index);
+        return string.Join(" ", Permutation.ToString(), TickPos, Index);
     }
 }
