@@ -174,4 +174,9 @@ public static class EnigmaConsole
                 Console.WriteLine(Enigma.EncodeString(s));
         }
     }
+
+    public static void Reset()
+    {
+        Enigma = null;
+    }
 }

@@ -3,6 +3,12 @@ namespace EnigmaTests;
 [TestClass]
 public class EnigmaTest
 {
+    [TestInitialize]
+    public void Reset()
+    {
+        EnigmaConsole.Reset();
+    }
+
     [TestMethod]
     public void TestIdentity()
     {
