@@ -38,7 +38,7 @@ public class Involution : Permutation
     {
         for (int i = 0; i <= Enigma.n - 1; i++)
         {
-            if (Forward(Forward(i)) != i)
+            if (ApplyTo(ApplyTo(i)) != i)
                 return false;
         }
         return true;
@@ -59,12 +59,12 @@ public class Involution : Permutation
 
         for (int i = 0; i <= 2 * (pairs - 1); i += 2)
         {
-            involution[p.Perm[i]] = p.Perm[i + 1];
-            involution[p.Perm[i + 1]] = p.Perm[i];
+            involution[p.ApplyTo(i)] = p.ApplyTo(i + 1);
+            involution[p.ApplyTo(i + 1)] = p.ApplyTo(i);
         }
 
         if (Enigma.n % 2 == 1)
-            involution[p.Perm[Enigma.n - 1]] = p.Perm[Enigma.n - 1];
+            involution[p.ApplyTo(Enigma.n - 1)] = p.ApplyTo(Enigma.n - 1);
 
         return new Involution(involution);
     }

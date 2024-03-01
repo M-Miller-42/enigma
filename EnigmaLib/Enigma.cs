@@ -106,18 +106,18 @@ public class Enigma
         int j = 0;
         foreach (int c in input)
         {
-            j = _patchBoard.Forward(c);
+            j = _patchBoard.ApplyTo(c);
 
 
             for (int ii = 0; ii < _rotors.Length; ii++)
                 j = _rotors[ii].Forward(j);
 
-            j = _reflector.Forward(j);
+            j = _reflector.ApplyTo(j);
 
             for (int ii = _rotors.Length - 1; ii >= 0; ii--)
                 j = _rotors[ii].Backward(j);
 
-            j = _patchBoard.Backward(j);
+            j = _patchBoard.ApplyInverseTo(j);
 
             res[i] = j;
             _rotors[0].Tick();

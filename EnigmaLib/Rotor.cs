@@ -33,13 +33,13 @@ public class Rotor
 
     public int Forward(int i)
     {
-        return (Permutation.Forward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.ApplyTo((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
         // return ((base.Forward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 
     public int Backward(int i)
     {
-        return (Permutation.Backward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.ApplyInverseTo((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
         // return ((base.Backward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 

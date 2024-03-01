@@ -45,7 +45,14 @@ public partial class Permutation
     }
 
     private int[] _inv;
-    public virtual int Backward(int i)
+
+
+    public int ApplyTo(int i)
+    {
+        return Table[i];
+    }
+
+    public int ApplyInverseTo(int i)
     {
         return _inv[i];
     }
