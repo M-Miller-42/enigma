@@ -1,13 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaLib", "EnigmaLib\EnigmaLib.csproj", "{FCF1E8E6-FD1F-4A52-8210-7C0ACBB2064B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnigmaLib", "EnigmaLib\EnigmaLib.csproj", "{FCF1E8E6-FD1F-4A52-8210-7C0ACBB2064B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaConsole", "EnigmaConsole\EnigmaConsole.csproj", "{61A3C972-034B-4EBD-981F-ECEA8DBCB6D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnigmaConsole", "EnigmaConsole\EnigmaConsole.csproj", "{61A3C972-034B-4EBD-981F-ECEA8DBCB6D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaTests", "EnigmaTests\EnigmaTests.csproj", "{C8704959-62CF-4586-8E41-D6A2A5BEF0D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnigmaTests", "EnigmaTests\EnigmaTests.csproj", "{C8704959-62CF-4586-8E41-D6A2A5BEF0D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
