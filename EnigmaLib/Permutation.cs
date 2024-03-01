@@ -8,7 +8,7 @@ public partial class Permutation
     public static partial Regex Alphabet();
 
     private static Random rand = new Random();
-    private static Permutation _identity;
+    private static Permutation? _identity;
     public static Permutation Identity
     {
         get

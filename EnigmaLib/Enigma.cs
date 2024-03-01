@@ -33,7 +33,7 @@ public class Enigma
     }
 
 
-    private Rotor[] _rotors;
+    private Rotor[] _rotors = Array.Empty<Rotor>();
     public Rotor getRotor(int index)
     {
         if (index >= _rotors.Length)
@@ -72,7 +72,7 @@ public class Enigma
 
     private void CreateRotors(RotorParam[] rotorParams)
     {
-        Rotor next = null;
+        Rotor? next = null;
         _rotors = new Rotor[rotorParams.Length];
         for (int i = rotorParams.Length - 1; i >= 0; i--)
         {
