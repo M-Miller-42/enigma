@@ -1,5 +1,3 @@
-using System.Net.NetworkInformation;
-
 public class RotorParam
 {
     public int TickPos {get; }
