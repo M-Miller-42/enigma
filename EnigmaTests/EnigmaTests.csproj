@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EnigmaLib\EnigmaLib.csproj" />
+    <ProjectReference Include="..\EnigmaConsole\EnigmaConsole.csproj" />
   </ItemGroup>
 
 </Project>
