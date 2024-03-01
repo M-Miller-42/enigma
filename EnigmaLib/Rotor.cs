@@ -11,8 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 
-public class Rotor : Permutation
+public class Rotor
 {
+    public Permutation Permutation { get; }
     private int _Index;
     public int Index
     {
@@ -39,41 +40,35 @@ public class Rotor : Permutation
         }
     }
 
-    private Rotor? _nextRotor;
-    public Rotor? NextRotor
+    public Rotor? NextRotor { get; }
+
+
+
+    public int Forward(int i)
     {
-        get
-        {
-            return _nextRotor;
-        }
-    }
-
-
-
-    public override int Forward(int i)
-    {
-        return (base.Forward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.Forward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
         // return ((base.Forward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 
-    public override int Backward(int i)
+    public int Backward(int i)
     {
-        return (base.Backward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
+        return (Permutation.Backward((i + _Index + Enigma.n) % Enigma.n) - _Index + Enigma.n) % Enigma.n;
         // return ((base.Backward((i + _Index) % Enigma.n) - _Index) % Enigma.n + Enigma.n) % Enigma.n;
     }
 
-    public Rotor(RotorParam rp, Rotor? nextRotor) : base(rp.Perm.Perm)
+    public Rotor(RotorParam rp, Rotor? nextRotor)
     {
-        _Index = rp.Index;
-        _TickPos = rp.TickPos;
-        this._nextRotor = nextRotor;
+        this.Permutation = rp.Perm;
+        this.Index = rp.Index;
+        this.TickPos = rp.TickPos;
+        this.NextRotor = nextRotor;
     }
 
 
     public virtual void Tick()
     {
         if (_Index == _TickPos)
-            _nextRotor?.Tick();
+            NextRotor?.Tick();
         _Index = (_Index + 1) % Enigma.n;
     }
 
