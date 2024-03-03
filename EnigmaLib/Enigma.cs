@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public partial class Enigma
 {
     public static int N => Alphabet.Count;

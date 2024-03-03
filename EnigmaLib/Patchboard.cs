@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public class PatchBoard(Permutation permutation) : Permutation(permutation.Table)
 {
     public override string ToString()

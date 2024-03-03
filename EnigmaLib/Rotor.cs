@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public class Rotor
 {
     public Permutation Permutation { get; }

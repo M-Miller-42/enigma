@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public class Involution : Permutation
 {
     private static Involution? identity;

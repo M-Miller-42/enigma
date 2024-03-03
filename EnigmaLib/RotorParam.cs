@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public class RotorParam
 {
     public int TickPos {get; }

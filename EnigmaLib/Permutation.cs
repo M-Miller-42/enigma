@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 
+namespace EnigmaLib;
 public partial class Permutation
 {
     private static Random RandomGen = new Random();

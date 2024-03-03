@@ -1,5 +1,6 @@
-namespace EnigmaTests;
+using EnigmaLib;
 
+namespace EnigmaTests;
 [TestClass]
 public class PermutationTest
 {

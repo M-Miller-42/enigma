@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 
+namespace EnigmaLib;
 public partial class LatinAlphabet : IAlphabet
 {
     int IAlphabet.Count => 26;

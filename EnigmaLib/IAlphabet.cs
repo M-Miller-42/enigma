@@ -1,3 +1,4 @@
+namespace EnigmaLib;
 public interface IAlphabet
 {
     public int Count { get; }

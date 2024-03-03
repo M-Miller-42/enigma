@@ -1,3 +1,5 @@
+using EnigmaLib;
+
 public static class EnigmaConsole
 {
     private const string EnigmaNullMsg = "No enigma created yet. Use the `!create` command.";
@@ -163,3 +165,4 @@ public static class EnigmaConsole
         Enigma = null;
     }
 }
+
