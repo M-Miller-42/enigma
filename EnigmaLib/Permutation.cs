@@ -8,10 +8,7 @@ public partial class Permutation
     {
         get
         {
-            if (_identity == null)
-            {
-                _identity = new Permutation(Enumerable.Range(0, Enigma.N));
-            }
+            _identity ??= new Permutation(Enumerable.Range(0, Enigma.N));
             return _identity;
         }
     }

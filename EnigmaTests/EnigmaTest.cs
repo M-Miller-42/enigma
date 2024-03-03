@@ -26,8 +26,8 @@ public class EnigmaTest
         Reflector reflector = new Reflector(Involution.Identity);
         RotorParam[] rotorParams = { new(Permutation.Identity, 0, 0), new(Permutation.Identity, 0, 0) };
         Enigma enigma = new Enigma(rotorParams, reflector, patchBoard);
-        Rotor r0 = enigma.getRotor(0);
-        Rotor r1 = enigma.getRotor(1);
+        Rotor r0 = enigma.GetRotor(0);
+        Rotor r1 = enigma.GetRotor(1);
         r0.Tick();
         Assert.AreEqual(1, r0.Index);
         Assert.AreEqual(1, r1.Index);

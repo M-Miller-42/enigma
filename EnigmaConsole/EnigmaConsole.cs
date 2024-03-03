@@ -76,7 +76,7 @@ public static class EnigmaConsole
         command.Dequeue();
         if (!command.Any())
             return;
-        rotor = Enigma.getRotor(int.Parse(command.Dequeue()));
+        rotor = Enigma.GetRotor(int.Parse(command.Dequeue()));
         rotor.Index = 0;
 
         if (!command.Any())

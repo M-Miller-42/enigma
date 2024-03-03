@@ -45,16 +45,16 @@ public partial class Enigma
     }
 
 
-    private Rotor[] _rotors = Array.Empty<Rotor>();
+    private Rotor[] _rotors = [];
 
-    public Rotor getRotor(int index)
+    public Rotor GetRotor(int index)
     {
         if (index >= _rotors.Length)
             throw new ArgumentOutOfRangeException();
         return _rotors[index];
     }
 
-    public void getRotor(int index, Rotor value)
+    public void SetRotor(int index, Rotor value)
     {
         if (value == null)
             throw new NullReferenceException();
